@@ -39,21 +39,21 @@
         <button class="btn btn-primary text-center" type="button">
             Importar Negociações
         </button>
-        <button class="btn btn-primary text-center" type="button">
+        <button class="btn btn-primary text-center" type="button" onclick="controler.apagaNegociacao(event)">
             Apagar
         </button>
     </div>
     <br>
     <br>
 
-    <div id="negociacoesView"></div>   
-   
+    <div id="negociacoesView"></div>
+
     <!-- Views -->
     <script src="js/app/views/View.js"></script>
     <script src="js/app/views/NegociacaoView.js"></script>
     <script src="js/app/views/MensagemView.js"></script>
 
-    <!-- Models --> 
+    <!-- Models -->
     <script src="js/app/models/Negociacao.js"></script>
     <script src="js/app/models/Mensagem.js"></script>
     <script src="js/app/models/ListaNegociacao.js"></script>
@@ -61,14 +61,20 @@
     <!-- Controlers -->
     <script src="js/app/controllers/NegociacaoController.js"></script>
 
+    <!-- Services -->
+    <script src="js/app/services/ProxyFactory.js"></script>
+
     <!-- Helpers -->
     <script src="js/app/helpers/DateHelper.js"></script>
-    
-    
+
+
     <script>
         let controler = new NegociacaoController();
 
+        
     </script>
+
+
 </body>
 
 </html>

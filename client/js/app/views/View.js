@@ -9,6 +9,6 @@ class View{
     }
 
     template(model){
-        throw new Error("O método _template deve ser implementado");
+        throw new Error("O método template(model) deve ser implementado");
     }
 }   
