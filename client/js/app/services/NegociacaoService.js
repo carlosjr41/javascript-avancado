@@ -8,7 +8,7 @@ class NegociacaoService {
         return Promise.all([
             this.obtemNegociacoesSemana(),
             this.obtemNegociacoesSemanaAnterior(),
-            this.obtemNegociacoesSemanaAnterior()
+            this.obtemNegociacoesSemanaRetrasada()
         ]).then(periodos => {
 
             let negociacoes = periodos

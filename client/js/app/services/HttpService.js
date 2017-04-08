@@ -7,6 +7,7 @@ class HttpService{
             xhr.onreadystatechange = () => {
                 if (xhr.readyState == 4) {
                     if (xhr.status == 200) {
+                        
                         resolve(JSON.parse(xhr.responseText));
                     }
                     else {
