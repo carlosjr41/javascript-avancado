@@ -1,7 +1,7 @@
 class ProxyFactory{
 
-    static create(objeto,props,acao){
-        return new Proxy(objeto, {
+    static create(model,props,acao){
+        return new Proxy(model, {
             get(target, prop, receiver) {
                 if (props.includes(prop) && typeof (target[prop]) == "function") {
                     return function () {
