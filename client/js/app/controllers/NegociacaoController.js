@@ -6,11 +6,11 @@ class NegociacaoController {
         this._inputQuantidade = elemento("#quantidade");
         this._inputValor = elemento("#valor");
         let self = this;
-        
-        this._listaNegociacao = new Bind(new ListaNegociacao(),new NegociacaoView(elemento("#negociacoesView")),'add','esvazia','addAll');
 
-        this._mensagem = new Bind(new Mensagem(),new MensagemView(elemento("#mensagem")),'texto');
-        
+        this._listaNegociacao = new Bind(new ListaNegociacao(), new NegociacaoView(elemento("#negociacoesView")), 'add', 'esvazia', 'addAll');
+
+        this._mensagem = new Bind(new Mensagem(), new MensagemView(elemento("#mensagem")), 'texto');
+
 
     }
 
@@ -44,15 +44,18 @@ class NegociacaoController {
         this._inputData.focus();
     }
 
-    importaNegociacoes(){
+    importaNegociacoes() {
         let service = new NegociacaoService();
-        service.obtemNegociacoesSemana((err,negociacoes) =>{
-            if (err){
-                this._mensagem.texto = err;
-                return;
-            }
-            this._listaNegociacao.addAll(negociacoes);
-            this._mensagem.texto = "Negociacões recebidas com sucesso";
-        })
+
+        service.obterNegociacoes()
+        .then(negociacoes => {
+            let arrayNegociacoes = negociacoes.reduce((saida,atual) => saida.concat(atual),[]);
+            this._listaNegociacao.addAll(arrayNegociacoes);
+            this._mensagem.texto = "mensagens recebidas com sucesso";
+        }).catch(error => this._mensagem.texto = error);
+
+       
+
+     
     }
 }
