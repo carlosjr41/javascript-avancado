@@ -36,7 +36,7 @@
     </form>
 
     <div class="text-center">
-        <button class="btn btn-primary text-center" type="button">
+        <button onclick="controler.importaNegociacoes()" class="btn btn-primary text-center" type="button">
             Importar Negociações
         </button>
         <button class="btn btn-primary text-center" type="button" onclick="controler.apagaNegociacao(event)">
@@ -63,6 +63,7 @@
 
     <!-- Services -->
     <script src="js/app/services/ProxyFactory.js"></script>
+    <script src="js/app/services/NegociacaoService.js"></script>
 
     <!-- Helpers -->
     <script src="js/app/helpers/DateHelper.js"></script>

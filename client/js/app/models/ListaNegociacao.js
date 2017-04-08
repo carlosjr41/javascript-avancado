@@ -11,6 +11,10 @@ class ListaNegociacao{
         this._negociacoes.push(negociacao);
     }
 
+    addAll(negociacoes){
+        this._negociacoes = this._negociacoes.concat(negociacoes);
+    }
+
     esvazia(){
         this._negociacoes = [];
     }
