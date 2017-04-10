@@ -32,7 +32,7 @@
             console.log(event.target.error);
         }
 
-        function adiciona() {
+        function adiciona() {  
             let transaction = connection.transaction(['negociacoes'], 'readwrite');
 
             let store = transaction.objectStore('negociacoes');
@@ -53,30 +53,7 @@
         }
 
         function listaTodos(){
-            let transaction = connection.transaction(['negociacoes'], 'readwrite');
-
-            let store = transaction.objectStore('negociacoes');
-
-            let negociacoes = [];
-
-            let cursor = store.openCursor();
-
-            cursor.onsuccess = event =>{
-                let atual = event.target.result;
-                if (atual){
-                    let dado = atual.value;
-                    console.log(dado);
-                    negociacoes.push(new Negociacao(dado._data,dado._quantidade,dado._valor));
-                    atual.continue();
-                }
-                else{
-                    console.log(negociacoes);
-                }
-            }
-
-            cursor.onerror = event =>{
-                console.log(event.target.error.name);
-            }
+            
         }
     </script>
 </body>
