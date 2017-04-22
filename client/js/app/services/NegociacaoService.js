@@ -58,4 +58,34 @@ class NegociacaoService {
 
 
     }
+
+    cadastra(negociacao){
+        
+        return ConnectionFactory.getConnection()
+            .then(connection => new NegociacaoDao(connection))
+            .then(dao => dao.adiciona(negociacao))
+            .catch(erro => { 
+                throw new Error(erro);
+            });
+                
+           
+    }
+
+    lista(){
+
+        return ConnectionFactory.getConnection()
+            .then(connection => new NegociacaoDao(connection))
+            .then(dao => dao.listaTodos())
+            .catch(erro => { 
+                throw new Error(erro);
+            });
+    }
+
+    apaga(){
+        return ConnectionFactory.getConnection()
+            .then(connection => new NegociacaoDao(connection).apagaTodos())
+            .catch(erro => {
+                throw new Error(erro);
+            });
+    }
 }

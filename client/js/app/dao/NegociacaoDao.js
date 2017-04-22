@@ -15,8 +15,7 @@ class NegociacaoDao {
 
             
             request.onsuccess= event =>{
-                console.log("Salvando negociacao no banco");
-                resolve();
+                resolve("Negociação Salva com Sucesso");
             };
 
             request.onerror = event =>{

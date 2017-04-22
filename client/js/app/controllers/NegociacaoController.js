@@ -9,15 +9,17 @@ class NegociacaoController {
         this._listaNegociacao = new Bind(new ListaNegociacao(), new NegociacaoView(elemento("#negociacoesView")), 'add', 'esvazia', 'addAll', 'orderBy');
 
         this._mensagem = new Bind(new Mensagem(), new MensagemView(elemento("#mensagem")), 'texto');
+        
+        this._service = new NegociacaoService();
 
         this._init();
 
 
     }
 
-    _init(){
-         ConnectionFactory.getConnection()
-            .then(connection => new NegociacaoDao(connection).listaTodos())
+    _init() {
+        this._service.
+            lista()
             .then(negociacoes => this._listaNegociacao.addAll(negociacoes))
             .catch(erro => this._mensagem.texto = erro);
 
@@ -28,25 +30,15 @@ class NegociacaoController {
 
     adicionaNegociacao(event) {
         event.preventDefault();
+        let negociacao = this._criaNegociacao();
 
-        ConnectionFactory.getConnection()
-            .then(connection => {
-                let negociacao = this._criaNegociacao();
-                console.log(negociacao);
-                new NegociacaoDao(connection)
-                    .adiciona(negociacao)
-                    .then(() => {
-                        this._listaNegociacao.add(negociacao);
-                        this._mensagem.texto = "Negociação adicionada com sucesso";
-                        this._limpaFormulario();
-
-
-
-                    })
+        this._service.
+            cadastra(negociacao).
+            then(mensagem => {
+                this._listaNegociacao.add(negociacao);
+                this._mensagem.texto = mensagem;
+                this._limpaFormulario();
             }).catch(erro => this._mensagem.texto = erro);
-
-
-
 
 
     }
@@ -62,14 +54,13 @@ class NegociacaoController {
 
     apagaNegociacao(event) {
 
-        ConnectionFactory.getConnection()
-            .then(connection => new NegociacaoDao(connection).apagaTodos())
+        this._service
+            .apaga()
             .then(mensagem => {
                 this._listaNegociacao.esvazia();
 
                 this._mensagem.texto = mensagem
-            })
-            .catch(erro => this._mensagem.texto = erro);
+            }).catch(erro => this._mensagem.texto = erro);
 
 
     }
@@ -82,16 +73,15 @@ class NegociacaoController {
     }
 
     importaNegociacoes() {
-        let service = new NegociacaoService();
 
-        service.obterNegociacoes()
+        this._service.obterNegociacoes()
             .then(negociacoes => {
                 console.log(negociacoes);
                 //let arrayNegociacoes = negociacoes.reduce((saida, atual) => saida.concat(atual), []);
                 //console.log(arrayNegociacoes);
-                negociacoes = negociacoes.filter(negociacao => 
-                    !this._listaNegociacao.negociacoes.some(negociacaoExistente => 
-                            JSON.stringify(negociacao) == JSON.stringify(negociacaoExistente)));
+                negociacoes = negociacoes.filter(negociacao =>
+                    !this._listaNegociacao.negociacoes.some(negociacaoExistente =>
+                        JSON.stringify(negociacao) == JSON.stringify(negociacaoExistente)));
                 this._listaNegociacao.addAll(negociacoes);
                 this._mensagem.texto = "mensagens recebidas com sucesso";
             }).catch(error => this._mensagem.texto = error);
