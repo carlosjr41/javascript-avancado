@@ -10,12 +10,20 @@ class NegociacaoController {
 
         this._mensagem = new Bind(new Mensagem(), new MensagemView(elemento("#mensagem")), 'texto');
 
-        ConnectionFactory.getConnection()
+        this._init();
+
+
+    }
+
+    _init(){
+         ConnectionFactory.getConnection()
             .then(connection => new NegociacaoDao(connection).listaTodos())
             .then(negociacoes => this._listaNegociacao.addAll(negociacoes))
             .catch(erro => this._mensagem.texto = erro);
 
-
+        setInterval(() => {
+            this.importaNegociacoes();
+        }, 3000)
     }
 
     adicionaNegociacao(event) {
@@ -78,8 +86,13 @@ class NegociacaoController {
 
         service.obterNegociacoes()
             .then(negociacoes => {
-                let arrayNegociacoes = negociacoes.reduce((saida, atual) => saida.concat(atual), []);
-                this._listaNegociacao.addAll(arrayNegociacoes);
+                console.log(negociacoes);
+                //let arrayNegociacoes = negociacoes.reduce((saida, atual) => saida.concat(atual), []);
+                //console.log(arrayNegociacoes);
+                negociacoes = negociacoes.filter(negociacao => 
+                    !this._listaNegociacao.negociacoes.some(negociacaoExistente => 
+                            JSON.stringify(negociacao) == JSON.stringify(negociacaoExistente)));
+                this._listaNegociacao.addAll(negociacoes);
                 this._mensagem.texto = "mensagens recebidas com sucesso";
             }).catch(error => this._mensagem.texto = error);
 

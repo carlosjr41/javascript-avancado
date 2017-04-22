@@ -21,15 +21,15 @@ class ListaNegociacao {
     }
 
     get volumeTotal() {
-        return this._negociacoes.reduce((total, n) => total + n.volume, 0);
+        return this._negociacoes.reduce((total, n) => total + parseFloat(n.volume), 0);
     }
 
     get quantidadeTotal() {
-        return this._negociacoes.reduce((total, n) => total + n.quantidade, 0);
+        return this._negociacoes.reduce((total, n) => total + parseInt(n.quantidade), 0);
     }
 
     get valorTotal() {
-        return this._negociacoes.reduce((total, n) => total + n.valor, 0);
+        return this._negociacoes.reduce((total, n) => total + parseFloat(n.valor), 0);
     }
 
 
