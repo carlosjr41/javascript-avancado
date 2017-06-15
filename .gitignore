@@ -1,2 +1,4 @@
 *.log
 launch.json
+client/node_modules
+client/js/app
