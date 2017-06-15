@@ -26,4 +26,8 @@ class Negociacao {
     get data(){
         return new Date(this._data.getTime());
     }
+
+    equals(outraNegociacao){
+        return JSON.stringify(this) == JSON.stringify(outraNegociacao);
+    }
 }

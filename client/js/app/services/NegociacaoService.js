@@ -10,14 +10,13 @@ class NegociacaoService {
             this.obtemNegociacoesSemanaAnterior(),
             this.obtemNegociacoesSemanaRetrasada()
         ]).then(periodos => {
-
             let negociacoes = periodos
                 .reduce((dados, periodo) => dados.concat(periodo), []);
-
             return negociacoes;
 
         }).catch(erro => {
-            throw new Error(erro);
+            console.log(erro);
+            throw new Error("Erro ao obter negociações");
         });
 
     } 
@@ -77,6 +76,7 @@ class NegociacaoService {
             .then(connection => new NegociacaoDao(connection))
             .then(dao => dao.listaTodos())
             .catch(erro => { 
+                console.log(erro)
                 throw new Error(erro);
             });
     }
@@ -86,6 +86,19 @@ class NegociacaoService {
             .then(connection => new NegociacaoDao(connection).apagaTodos())
             .catch(erro => {
                 throw new Error(erro);
+            });
+    }
+
+    importa(listaAtual){
+        return this.obterNegociacoes()
+            .then(negociacoes => {
+                return negociacoes = negociacoes.filter(negociacao =>
+                    !listaAtual.some(negociacaoExistente =>
+                        negociacao.equals(negociacaoExistente)));
+                
+            }).catch(error =>{
+                console.log(error);
+                throw new Error("Não foi possivel importar negociações");
             });
     }
 }
